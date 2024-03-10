@@ -31,8 +31,6 @@ const authenticateToken = (req, res, next) => {
     if (token === process.env.AUTH_TOKEN) {
         next();
     } else {
-        return res.status(403).send(process.env.AUTH_TOKEN);
-
         return res.sendStatus(403);
     }
 };
