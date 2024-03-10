@@ -1,5 +1,6 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
+const fs = require("fs");
 require("dotenv").config();
 
 const app = express();
@@ -9,13 +10,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Initialize SQLite database
-const db = new sqlite3.Database('./codingwithmybuddies.sqlite', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    console.log('Connected to the file-based SQLite database.');
-  }
-});
+const db = new sqlite3.Database(
+    "./codingwithmybuddies.sqlite",
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+        if (err) {
+            console.error(err.message);
+        } else {
+            console.log("Connected to the file-based SQLite database.");
+        }
+    }
+);
 
 // Create messages table
 db.run(
@@ -34,6 +39,19 @@ const authenticateToken = (req, res, next) => {
         return res.sendStatus(403);
     }
 };
+
+app.get("/", (req, res) => {
+    const filePath = "./index.txt"; // Path to your text file
+
+    fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            res.status(500).send("Sorry, something went wrong.");
+        } else {
+            res.send(`<pre>${data}</pre>`);
+        }
+    });
+});
 
 // Routes
 app.post("/api/messages", authenticateToken, (req, res) => {
