@@ -4,7 +4,7 @@
 url="http://78.47.100.184/api/messages"
 
 # Static token for authentication
-auth_token="auth_token"
+# auth_token=""
 
 # username=""
 
@@ -26,9 +26,9 @@ fi
     '{text: $msg, userName: $user}')
 
   # Send POST request to the API
-  response=$(curl -s -X POST $url \
+  response=$(curl -X POST $url \
     -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $auth_token" \
+    -H "Authorization: $auth_token" \
     -d "$json_payload")
 
   echo "Response from server: $response"
@@ -38,9 +38,9 @@ fi
 get_messages() {
   # Send GET request to the API
   response=$(curl -s -X GET $url \
-                    -H "Authorization: Bearer $auth_token")
+    -H "Authorization: $auth_token")
 
-  echo "Messages from server: $response"
+  echo $response | jq -r '.[] | "\(.userName): \(.text) [\(.createdAt)]"'
 }
 
 # Check command argument
