@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# API URL
+url="http://78.47.100.184/api/messages"
+
+# Static token for authentication
+auth_token="auth_token"
+
+# username=""
+
+# Function to send a message
+send_message() {
+  echo "Enter your message:"
+  read message
+
+# if user is not set, ask for username
+if [ -z "$username" ]; then
+  echo "Enter your username:"
+  read username
+fi
+
+  # Convert message and username to JSON format
+  json_payload=$(jq -n \
+    --arg msg "$message" \
+    --arg user "$username" \
+    '{text: $msg, userName: $user}')
+
+  # Send POST request to the API
+  response=$(curl -s -X POST $url \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $auth_token" \
+    -d "$json_payload")
+
+  echo "Response from server: $response"
+}
+
+# Function to get messages
+get_messages() {
+  # Send GET request to the API
+  response=$(curl -s -X GET $url \
+                    -H "Authorization: Bearer $auth_token")
+
+  echo "Messages from server: $response"
+}
+
+# Check command argument
+case "$1" in
+  send)
+    send_message
+    ;;
+  get)
+    get_messages
+    ;;
+  *)
+    echo "Usage: printer-hub [get|send]"
+    exit 1
+    ;;
+esac
