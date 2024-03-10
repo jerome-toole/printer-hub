@@ -6,11 +6,11 @@ token=$1
 username=$2
 message=$3
 
-payload='{"userName":"'$username'","text":"'$message'"}'
+payload=$(jq -n --arg username "$username" --arg message "$message" '{userName: $username, message: $message}')
 
 curl -v \
   -H "Content-Type:application/json" \
   -H "authorization:${token}" \
   --request POST \
-  --data ${payload} \
-  http://localhost:3000/api/messages
+  --data "${payload}" \
+  http://78.47.100.184/api/messages
