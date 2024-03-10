@@ -21,8 +21,8 @@ fi
 
   # Convert message and username to JSON format
   json_payload=$(jq -n \
-    --arg msg "$message" \
     --arg user "$username" \
+    --arg msg "$message" \
     '{text: $msg, userName: $user}')
 
   # Send POST request to the API
