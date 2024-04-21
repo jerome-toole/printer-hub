@@ -5,13 +5,14 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const AUTH_TOKEN = process.env.AUTH_TOKEN
 
 // Middleware to parse request body
 app.use(express.json());
 
 // Initialize SQLite database
 const db = new sqlite3.Database(
-    "./codingwithmybuddies.sqlite",
+    "./db.sqlite",
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
     (err) => {
         if (err) {
@@ -34,13 +35,15 @@ const authenticateToken = (req, res, next) => {
 
     if (token == null) return res.sendStatus(401);
 
-    if (token === process.env.AUTH_TOKEN) {
+    if (token === AUTH_TOKEN) {
         next();
     } else {
         return res.sendStatus(403);
     }
 };
 
+
+// homepage
 app.get("/", (req, res) => {
     const filePath = "./index.txt"; // Path to your text file
 

@@ -21,3 +21,7 @@ curl -v -X POST http://78.47.100.184/api/messages \
 curl -v -X GET http://78.47.100.184/api/messages \
      -H "Authorization: Bearer #######"
 ```
+
+## Production
+
+Using PM2 https://github.com/Unitech/pm2
