@@ -1,0 +1,6 @@
+printer:
+  type: Usb
+  idVendor: 0x0525
+  idProduct: 0xA700
+  in_ep: 0x00
+  out_ep: 0x01
