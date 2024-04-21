@@ -91,7 +91,7 @@ app.post("/api/messages", authenticateToken, (req, res) => {
   }
 
   db.run(
-    `INSERT INTO messages (text, userName) VALUES (?, ?, ?)`,
+    `INSERT INTO messages (text, userName) VALUES (?, ?)`,
     [text, userName],
     function (err) {
       if (err) {
