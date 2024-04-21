@@ -9,9 +9,8 @@ def get_web_content(url, lines=5):
     response = requests.get(url)
     content = response.content
 
-    soup = BeautifulSoup(content, 'html.parser')
-
-    print(soup.prettify())
+    response = BeautifulSoup(content, 'html.parser')
+    response = response.prettify()
 
     # lines = content.splitlines()
     # print(lines)
