@@ -23,6 +23,7 @@ else:
 
 # Set up print items
 # img_file = "/Users/jerometoole/Desktop/fax/ed-josh.jpg"
+img_file = None
 txtURL = "https://thwopzap.net/"
 
 printer.open()
@@ -36,9 +37,7 @@ if int(os.getenv("SPACE_BEFORE", False)):
 if txtURL:
     content = web_content.get_web_content(txtURL, 5)
 
-    for line in content:
-        printer.text(line)
-        printer.text("\n")
+    printer.text(content)
 
 if img_file:
     img_file = images.prepare_image(img_file, PRINTER_WIDTH)

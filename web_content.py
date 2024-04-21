@@ -2,16 +2,16 @@ def get_web_content(url, lines=5):
     import requests
     import html2text
 
+    from bs4 import BeautifulSoup
+
     # import random
 
     response = requests.get(url)
-    content = response.text
+    content = response.content
 
-    html2text = html2text.HTML2Text()
+    soup = BeautifulSoup(content, 'html.parser')
 
-    print(html2text)
-
-    response = html2text.handle(content)
+    print(soup.prettify())
 
     # lines = content.splitlines()
     # print(lines)
@@ -19,4 +19,4 @@ def get_web_content(url, lines=5):
     # lines = str(lines)  # Convert lines to a string
     # random_lines = random.sample(lines, lines)
 
-    return response.handle
+    return response
