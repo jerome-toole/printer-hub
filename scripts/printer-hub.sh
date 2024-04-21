@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # API URL
-url="http://78.47.100.184/api/messages"
+url="http://thwopzap.net/api/messages"
 
 # Static token for authentication
-# auth_token=""
+auth_token="secret123"
 
-# username=""
+username="Jerome"
 
 # Function to send a message
 send_message() {
