@@ -4,9 +4,9 @@
 url="http://thwopzap.net/api/messages"
 
 # Static token for authentication
-auth_token="secret123"
+auth_token=""
 
-username="Jerome"
+username=""
 
 # Function to send a message
 send_message() {
