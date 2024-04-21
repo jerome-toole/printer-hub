@@ -1,8 +1,9 @@
 # P R I N T E R - H U B
 
+Running on https://thwopzap.net
+
 Run `npm run start`.
 
-Currently, the server is running at: http://78.47.100.184/
 
 ## Example usage
 
