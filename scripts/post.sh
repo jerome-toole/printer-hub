@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Usage: ./post.sh <token> <username> <message>
+# Usage: ./post.sh <token> <username> <text>
 
 token=$1
 username=$2
-message=$3
+text=$3
 
-payload=$(jq -n --arg username "$username" --arg message "$message" '{userName: $username, message: $message}')
+payload=$(jq -n --arg username "$username" --arg text "$text" '{userName: $username, text: $text}')
 
 curl -v \
   -H "Content-Type:application/json" \
   -H "authorization:${token}" \
   --request POST \
   --data "${payload}" \
-  http://78.47.100.184/api/messages
+  http://thwopzap.net/api/messages

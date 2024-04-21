@@ -7,4 +7,4 @@ token=$1
 curl -v \
   -H "authorization:${token}" \
   --request GET \
-  http://localhost:3000/api/messages
+  http://thwopzap.net/api/messages
