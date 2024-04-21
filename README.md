@@ -10,7 +10,7 @@ Run `npm run start`.
 ### Send a message
 
 ```bash
-curl -v -X POST http://78.47.100.184/api/messages \
+curl -v -X POST http://thwopzap.net/api/messages \
     -H "Content-Type: application/json" \
     -H "Authorization: ########" \
     -d '{"text":"Hello, World!", "userName":"Jerome"}'
@@ -19,8 +19,8 @@ curl -v -X POST http://78.47.100.184/api/messages \
 ### Get all messages
 
 ```bash
-curl -v -X GET http://78.47.100.184/api/messages \
-     -H "Authorization: Bearer #######"
+curl -v -X GET http://thwopzap.net/api/messages \
+     -H "Authorization: #######"
 ```
 
 ## Production
