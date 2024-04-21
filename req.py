@@ -12,15 +12,21 @@ r = requests.get(endpoint, headers=headers)
 
 json = r.json()
 
+logfile_location = "log.txt"
+
 for i in json:
     user = i["userName"]
     message = i["text"]
-    created_at = datetime.strptime(i["createdAt"], "%Y-%m-%dT%H:%M:%S.%fZ")
+    created_at = datetime.strptime(i["createdAt"], "%Y-%m-%d %H:%M:%S")
 
-    text = f"{user} - {created_at.time()}\n{message}\n\n"
-    print(created_at.time(), datetime.now().time())
-    # print(created_at < (datetime.now() - timedelta(minutes=8)))
+    # 1 Hour to account for daylight savings,
+    # 10 minutes for... in the last 10 minutes.
+    delta = datetime.now() - timedelta(hours=1, minutes=1)
 
-    # printer.text(f"{user} - {created_at}\n{message}\n\n")
+    is_new = created_at > delta
 
-# printer.cut()
+    if is_new:
+        print(f"{user} - {created_at} - {message}")
+        text = f"{user} - {created_at.time()}\n{message}\n\n"
+        printer.text(f"{user} - {created_at}\n{message}\n\n")
+        printer.cut()
