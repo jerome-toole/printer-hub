@@ -1,6 +1,10 @@
 const express = require("express");
+const https = require("https")
+const http = require("http")
+const helmet = require("helmet")
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
+
 require("dotenv").config();
 
 const app = express();
@@ -13,9 +17,19 @@ const certs = {
     key: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/privkey.pem")
 }
 
+// helmet middleware to enforce HTTPS with HSTS
+app.use(helmet());
+app.use(helmet.hsts({
+    maxAge: 300,
+    includeSubDomains: true,
+    preload: true
+}));
+
 
 // Middleware to parse request body
 app.use(express.json());
+
+
 
 // Initialize SQLite database
 const db = new sqlite3.Database(
@@ -114,12 +128,5 @@ app.get("/api/messages", authenticateToken, (req, res) => {
     );
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
-
+http.createServer(app).listen(80)
 https.createServer(certs, app).listen(443)
-
-// Close the database connection
