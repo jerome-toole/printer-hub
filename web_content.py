@@ -12,9 +12,6 @@ def get_web_content(url, lines=5):
     response = BeautifulSoup(content, 'html.parser')
     response = response.prettify()
 
-    # lines = content.splitlines()
-    # print(lines)
-
     # lines = str(lines)  # Convert lines to a string
     # random_lines = random.sample(lines, lines)
 

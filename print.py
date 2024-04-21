@@ -24,13 +24,13 @@ else:
 # Set up print items
 # img_file = "/Users/jerometoole/Desktop/fax/ed-josh.jpg"
 img_file = None
-txtURL = "https://thwopzap.net/"
+txtURL = None
 
 printer.open()
 
-if int(os.getenv("SPACE_BEFORE", False)):
-    printer.text(os.getenv("SPACE_BEFORE"))
-
+if int(os.getenv("LINES_BEFORE", 0)) > 0:
+    for i in range(int(os.getenv("LINES_BEFORE", 0))):
+        printer.text("\n")
 
 # Print Content
 
@@ -47,10 +47,13 @@ if img_file:
 
 
 # Finish printing
+if int(os.getenv("LINES_AFTER", 0)) > 0:
+    for i in range(int(os.getenv("LINES_AFTER", 0))):
+        printer.text("\n")
 
-if int(os.getenv("SPACE_AFTER", False)):
-    printer.text(os.getenv("SPACE_AFTER"))
+print(os.getenv("CUT_PAPER", False))
 
+if os.getenv("CUT_PAPER", False):
+    printer.cut()
 
-# printer.cut()
 printer.close()
