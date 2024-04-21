@@ -9,7 +9,7 @@ const AUTH_TOKEN = process.env.AUTH_TOKEN
 
 // certs for ssl
 const certs = {
-    cert: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/fullchain.pem")
+    cert: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/fullchain.pem"),
     key: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/privkey.pem")
 }
 
