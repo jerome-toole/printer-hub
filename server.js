@@ -7,6 +7,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const AUTH_TOKEN = process.env.AUTH_TOKEN
 
+// certs for ssl
+const certs = {
+    cert: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/fullchain.pem")
+    key: fs.readFileSync("/etc/letsencrypt/live/thwopzap.net/privkey.pem")
+}
+
+
 // Middleware to parse request body
 app.use(express.json());
 
@@ -111,5 +118,8 @@ app.get("/api/messages", authenticateToken, (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+https.createServer(certs, app).listen(443)
 
 // Close the database connection
