@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 
 import requests
 from escpos.printer import Usb
@@ -14,7 +15,12 @@ json = r.json()
 for i in json:
     user = i["userName"]
     message = i["text"]
+    created_at = datetime.strptime(i["createdAt"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
-    printer.text(f"{user}: {message}\n")
+    text = f"{user} - {created_at.time()}\n{message}\n\n"
+    print(created_at.time(), datetime.now().time())
+    # print(created_at < (datetime.now() - timedelta(minutes=8)))
 
-printer.cut()
+    # printer.text(f"{user} - {created_at}\n{message}\n\n")
+
+# printer.cut()
