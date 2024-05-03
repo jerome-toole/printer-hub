@@ -1,2 +1,2 @@
-escpos
+python-escpos
 python-dotenv
