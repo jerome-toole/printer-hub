@@ -1,6 +1,7 @@
+"""TESTING MESSAGES IN COMMAND LINE"""
+
 import json
 from datetime import datetime, timedelta
-
 import requests
 from escpos.printer import Usb
 
