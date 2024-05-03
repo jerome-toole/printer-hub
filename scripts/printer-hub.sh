@@ -1,23 +1,38 @@
 #!/bin/bash
 
+# Load environment variables from .env file
+[ ! -f .env ] || export $(grep -v '^#' .env | xargs)
+
 # API URL
-url="http://thwopzap.net/api/messages"
+url=$FEED_URL
+
+# if FEED_URL is not set, exit with a message
+if [ -z "$url" ]; then
+  echo "FEED_URL is not set. Please set it in the .env file."
+  exit 1
+fi
 
 # Static token for authentication
-auth_token=""
+auth_token=$AUTH_TOKEN
 
-# username=""
+# if auth_token is not set, request it
+if [ -z "$auth_token" ]; then
+  echo "Enter your authentication token:"
+  read auth_token
+fi
+
+username=$USERNAME
+
+# if username is not set, request it
+if [ -z "$username" ]; then
+  echo "Enter your username:"
+  read username
+fi
 
 # Function to send a message
 send_message() {
   echo "Enter your message:"
   read message
-
-# if user is not set, ask for username
-if [ -z "$username" ]; then
-  echo "Enter your username:"
-  read username
-fi
 
   # Convert message and username to JSON format
   json_payload=$(jq -n \
