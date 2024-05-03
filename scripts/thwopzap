@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Load environment variables from .env file
+# Load environment variables from .env file (you must be running the script from the root of the project)
 [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
 
 # API URL
@@ -8,8 +8,9 @@ url=$FEED_URL
 
 # if FEED_URL is not set, exit with a message
 if [ -z "$url" ]; then
-  echo "FEED_URL is not set. Please set it in the .env file."
-  exit 1
+  echo "FEED_URL is not set. Please set it in the project .env file."
+  echo "Enter the ThwopZap API url:"
+  read url
 fi
 
 # Static token for authentication
