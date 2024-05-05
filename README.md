@@ -1,9 +1,15 @@
 # P R I N T E R - H U B
 
-Running on https://thwopzap.net
+Running on [https://thwopzap.net](https://thwopzap.net)
 
 Run `npm run start`.
 
+## Install
+
+```bash
+pip install -r requirements. txt
+npm install
+```
 
 ## Example usage
 
@@ -25,4 +31,4 @@ curl -v -X GET http://thwopzap.net/api/messages \
 
 ## Production
 
-Using PM2 https://github.com/Unitech/pm2
+Using [PM2](https://github.com/Unitech/pm2)
