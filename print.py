@@ -16,10 +16,11 @@ LP_PRINTER_NAME = os.getenv("LP_PRINTER_NAME", None)
 USB_PRINTER_VENDOR = os.getenv("USB_PRINTER_VENDOR", 0x0525)  # must be bytes
 USB_PRINTER_PRODUCT = os.getenv("USB_PRINTER_PRODUCT", 0xA700)  # def: aures 333
 FEED_URL = os.getenv("FEED_URL", None)
+AUTH_TOKEN = os.getenv("AUTH_TOKEN", "")
 PRINTER_WIDTH = int(os.getenv("PRINTER_WIDTH", 500))
 LINES_BEFORE = os.getenv("LINES_BEFORE", 0)
 LINES_AFTER = os.getenv("LINES_AFTER", 0)
-CUT_PAPER = os.getenv("CUT_PAPER").lower() == "true"
+CUT_PAPER = os.getenv("CUT_PAPER", "").lower() == "true"
 
 # ensure config
 # TODO: manage the config way better, maybe with a TUI tool
@@ -35,8 +36,7 @@ if PRINTER_MODE.upper() == "LP":
         exit(1)
 elif PRINTER_MODE.upper() == "USB":
     try:
-
-        USB_PRINTER_VENDOR = bytes(USB_PRINTER_VENDOR)
+        print(USB_PRINTER_VENDOR, USB_PRINTER_PRODUCT)
         printer = Usb(USB_PRINTER_VENDOR, USB_PRINTER_PRODUCT, 0)
     except:
         print("Failed to register USB printer. Check 'USB_*' env vars, using lsusb")
@@ -58,9 +58,15 @@ if FEED_URL == None:
 
 # get content and process
 
-response = requests.get(FEED_URL)
+
+headers = {"Authorization": AUTH_TOKEN}
+response = requests.get(FEED_URL, headers=headers)
 content = BeautifulSoup(response.content, "html.parser").prettify()
-printer.text(content)
+
+if response.status_code != 200:
+    print("Request not working")
+    print(response.status_code, response.json)
+    exit(1)
 
 # actually print
 
@@ -68,6 +74,8 @@ printer.open()
 
 if LINES_BEFORE > 0:
     printer.text("\n" * LINES_BEFORE)
+
+printer.text(content)
 
 if CUT_PAPER:
     printer.cut()
