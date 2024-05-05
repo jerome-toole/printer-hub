@@ -1,5 +1,3 @@
-"""Main printer script, run with cron"""
-
 from escpos.printer import Usb, LP
 import os
 from dotenv import load_dotenv
